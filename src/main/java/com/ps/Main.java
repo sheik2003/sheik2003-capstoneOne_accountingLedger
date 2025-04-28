@@ -89,6 +89,7 @@ public class Main {
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("transactions.csv",true));
             String formattedTransaction = String.format("%s|%s|%s|%s|%.2f\n", paymentDate, paymentTime, paymentDescription, paymentVendor, paymentAmount);
             bufferedWriter.write(formattedTransaction);
+            bufferedWriter.newLine();
             bufferedWriter.close();
 
         } catch (IOException e) {
