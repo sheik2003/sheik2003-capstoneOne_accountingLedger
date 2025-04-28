@@ -1,8 +1,7 @@
 package com.ps;
 
 import java.io.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -15,7 +14,7 @@ public class Main {
 
 
         loadTransactions();
-        displayDeposits();
+        displayMonthToDate();
 
         int homeScreenCommand;
 
@@ -188,6 +187,16 @@ public class Main {
         }
         }
 
+        private static void displayMonthToDate() {
+
+            LocalDate timeNow = LocalDate.now();
+
+            for (Transaction transaction : transactions) {
+                if (transaction.getDate().getMonth() == timeNow.getMonth() && transaction.getDate().getYear() == timeNow.getYear()) {
+                    System.out.printf("%s | %s | %s | %s | %.2f%n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+                }
+            }
+        }
 
 }
 
