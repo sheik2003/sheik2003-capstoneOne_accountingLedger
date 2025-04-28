@@ -14,7 +14,7 @@ public class Main {
 
 
         loadTransactions();
-        displayPreviousMonthToDate();
+        searchByVendor();
 
         int homeScreenCommand;
 
@@ -212,7 +212,40 @@ public class Main {
         }
     }
 
+    private static void displayYearToDate() {
 
+        LocalDate timeNow = LocalDate.now();
+
+        for (Transaction transaction : transactions) {
+            if (transaction.getDate().getYear() == timeNow.getYear()) {
+                System.out.printf("%s | %s | %s | %s | %.2f%n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+            }
+        }
+    }
+
+    private static void displayPreviousYear() {
+
+        LocalDate timeNow = LocalDate.now();
+        LocalDate previousYear = timeNow.minusYears(1);
+
+        for (Transaction transaction : transactions) {
+            if (transaction.getDate().getYear() == previousYear.getYear()) {
+                System.out.printf("%s | %s | %s | %s | %.2f%n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+            }
+        }
+    }
+
+    private static void searchByVendor() {
+
+        System.out.println("Please enter the name of the Vendor to filter search: ");
+        String userVendorFilter = scanner.nextLine();
+        for (Transaction transaction : transactions) {
+            if (userVendorFilter.equalsIgnoreCase(transaction.getVendor())) {
+                System.out.printf("%s | %s | %s | %s | %.2f%n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+
+            }
+        }
+    }
 
 }
 
