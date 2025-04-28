@@ -14,7 +14,7 @@ public class Main {
 
 
         loadTransactions();
-        displayMonthToDate();
+        displayPreviousMonthToDate();
 
         int homeScreenCommand;
 
@@ -192,11 +192,27 @@ public class Main {
             LocalDate timeNow = LocalDate.now();
 
             for (Transaction transaction : transactions) {
-                if (transaction.getDate().getMonth() == timeNow.getMonth() && transaction.getDate().getYear() == timeNow.getYear()) {
+                if (transaction.getDate().getMonth() == timeNow.getMonth() &&
+                        transaction.getDate().getYear() == timeNow.getYear()) {
                     System.out.printf("%s | %s | %s | %s | %.2f%n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
                 }
             }
         }
+
+    private static void displayPreviousMonthToDate() {
+
+        LocalDate timeNow = LocalDate.now();
+        LocalDate previousMonth = timeNow.minusMonths(1);
+
+        for (Transaction transaction : transactions) {
+            if (transaction.getDate().getMonth() == previousMonth.getMonth() &&
+                    transaction.getDate().getYear() == previousMonth.getYear()) {
+                System.out.printf("%s | %s | %s | %s | %.2f%n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+            }
+        }
+    }
+
+
 
 }
 
