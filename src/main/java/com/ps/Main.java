@@ -18,37 +18,37 @@ public class Main {
 
         int homeScreenCommand;
 
-
-        do {
-            System.out.println("Welcome to the home screen");
-            System.out.println("1) Add Deposit");
-            System.out.println("2) Make Payment");
-            System.out.println("3) Ledger");
-            System.out.println("0) Exit");
-            System.out.println("What would you like to do? ");
-            homeScreenCommand = scanner.nextInt();
-            scanner.nextLine();
-
-            switch (homeScreenCommand){
-                case 1:
-                    addDeposit();
-                    break;
-                case 2:
-                    makePayment();
-                    break;
-                case 3:
-                    displayLedger();
-                    break;
-                case 0:
-                    System.out.println("Exiting");
-                    break;
-                default:
-                    System.out.println("Wrong command entered please retry again with a valid choice ");
-
-            }
-
-        }
-        while (homeScreenCommand != 0);
+        displayLedger();
+//        do {
+//            System.out.println("Welcome to the home screen");
+//            System.out.println("1) Add Deposit");
+//            System.out.println("2) Make Payment");
+//            System.out.println("3) Ledger");
+//            System.out.println("0) Exit");
+//            System.out.println("What would you like to do? ");
+//            homeScreenCommand = scanner.nextInt();
+//            scanner.nextLine();
+//
+//            switch (homeScreenCommand){
+//                case 1:
+//                    addDeposit();
+//                    break;
+//                case 2:
+//                    makePayment();
+//                    break;
+//                case 3:
+//                    displayLedger();
+//                    break;
+//                case 0:
+//                    System.out.println("Exiting");
+//                    break;
+//                default:
+//                    System.out.println("Wrong command entered please retry again with a valid choice ");
+//
+//            }
+//
+//        }
+//        while (homeScreenCommand != 0);
     }
     private static void loadTransactions() {
 
@@ -149,8 +149,17 @@ public class Main {
 
 
     private static void displayLedger() {
+        displayAll();
+
     }
 
+
+    private static void displayAll(){
+
+    for (Transaction transaction : transactions){
+        System.out.println(transaction.getDate() + " " + transaction.getVendor() + " " + transaction.getDescription()  + " " + transaction.getAmount() + "\n");
+    }
+    }
 
 
 }
