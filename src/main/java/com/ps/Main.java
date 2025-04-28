@@ -50,8 +50,66 @@ public class Main {
         }
         while (homeScreenCommand != 0);
     }
+    private static void loadTransactions() {
 
-    private static void displayLedger() {
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader("transactions.csv"));
+
+            String input;
+
+            while ((input = bufferedReader.readLine()) != null){
+                String[] fields = input.split("\\|");
+
+                LocalDate date = LocalDate.parse(fields[0]);
+                LocalTime time = LocalTime.parse(fields[1]);
+                String description = fields[2];
+                String vendor = fields[3];
+                double amount = Double.parseDouble(fields[4]);
+
+                Transaction transaction = new Transaction(date,time,description,vendor,amount);
+
+                transactions.add(transaction);
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void addDeposit() {
+
+        System.out.println("Please enter the date of the Deposit(format yyyy-mm-dd): ");
+        String depositDateInString = scanner.nextLine();
+        LocalDate depositDate = LocalDate.parse(depositDateInString);
+
+        System.out.println("Please enter the time of the Deposit(format hh:mm:ss): ");
+        String depositTimeInString = scanner.nextLine();
+        LocalTime depositTime =  LocalTime.parse(depositTimeInString);
+
+        System.out.println("Please enter the description of the Deposit: ");
+        String depositDescription = scanner.nextLine();
+
+        System.out.println("Please enter the name of the Vendor: ");
+        String depositVendor = scanner.nextLine();
+
+        System.out.println("Please enter the payment amount: ");
+        double depositAmount = scanner.nextDouble();
+
+
+        transactions.add(new Transaction(depositDate,depositTime,depositDescription,depositVendor,depositAmount));
+
+        try {
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("transactions.csv",true));
+            String formattedTransaction = String.format("%s|%s|%s|%s|%.2f", depositDate,depositTime,depositDescription,depositVendor,depositAmount);
+            bufferedWriter.write(formattedTransaction);
+            System.out.println("✅ Deposit added successfully!");
+            bufferedWriter.newLine();
+            bufferedWriter.close();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     private static void makePayment() {
@@ -79,6 +137,7 @@ public class Main {
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("transactions.csv",true));
             String formattedTransaction = String.format("%s|%s|%s|%s|%.2f", paymentDate, paymentTime, paymentDescription, paymentVendor, convertedUserPaymentAmount);
             bufferedWriter.write(formattedTransaction);
+            System.out.println("✅ Payment added successfully!");
             bufferedWriter.newLine();
             bufferedWriter.close();
 
@@ -88,33 +147,8 @@ public class Main {
 
     }
 
-    private static void addDeposit() {
-    }
 
-    private static void loadTransactions() {
-
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader("transactions.csv"));
-
-            String input;
-
-            while ((input = bufferedReader.readLine()) != null){
-                String[] fields = input.split("\\|");
-
-                LocalDate date = LocalDate.parse(fields[0]);
-                LocalTime time = LocalTime.parse(fields[1]);
-                String description = fields[2];
-                String vendor = fields[3];
-                double amount = Double.parseDouble(fields[4]);
-
-                Transaction transaction = new Transaction(date,time,description,vendor,amount);
-
-                transactions.add(transaction);
-            }
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    private static void displayLedger() {
     }
 
 
