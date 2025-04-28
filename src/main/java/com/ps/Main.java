@@ -1,8 +1,6 @@
 package com.ps;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -15,6 +13,8 @@ public class Main {
     //main
     public static void main(String[] args) {
 
+
+        loadTransactions();
 
         int homeScreenCommand;
 
@@ -53,6 +53,32 @@ public class Main {
     }
 
     private static void makePayment() {
+
+        System.out.println("Please enter the date of the Payment(format yyyy-mm-dd): ");
+        String paymentDateInString = scanner.nextLine();
+        LocalDate paymentDate = LocalDate.parse(paymentDateInString);
+
+        System.out.println("Please enter the time of the Payment(format h:m:s): ");
+        String paymentTimeInString = scanner.nextLine();
+        LocalTime paymentTime =  LocalTime.parse(paymentTimeInString);
+
+        System.out.println("Please enter tge description of the payment: ");
+        String paymentDescription = scanner.nextLine();
+
+        System.out.println("Please enter the payment amount: ");
+        double paymentAmount = scanner.nextDouble();
+
+
+
+        try {
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("transactions.csv"));
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 
     private static void addDeposit() {
