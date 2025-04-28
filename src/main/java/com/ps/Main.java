@@ -35,7 +35,6 @@ public class Main {
                     break;
                 case 2:
                     makePayment();
-                    System.out.println(transactions);
                     break;
                 case 3:
                     displayLedger();
@@ -56,38 +55,29 @@ public class Main {
     }
 
     private static void makePayment() {
-
-        //date
         System.out.println("Please enter the date of the Payment(format yyyy-mm-dd): ");
         String paymentDateInString = scanner.nextLine();
         LocalDate paymentDate = LocalDate.parse(paymentDateInString);
 
-        //time
-        System.out.println("Please enter the time of the Payment(format h:m:s): ");
+        System.out.println("Please enter the time of the Payment(format hh:mm:ss): ");
         String paymentTimeInString = scanner.nextLine();
         LocalTime paymentTime =  LocalTime.parse(paymentTimeInString);
 
-        //description
         System.out.println("Please enter the description of the payment: ");
         String paymentDescription = scanner.nextLine();
 
-        //vendor
         System.out.println("Please enter the name of the Vendor: ");
         String paymentVendor = scanner.nextLine();
 
-
-        //amount
         System.out.println("Please enter the payment amount: ");
-        double paymentAmount = scanner.nextDouble();
+        double userPaymentAmount = scanner.nextDouble();
+        double convertedUserPaymentAmount = userPaymentAmount * -1;
 
-
-        transactions.add(new Transaction(paymentDate,paymentTime,paymentDescription,paymentVendor,paymentAmount));
-
-
+        transactions.add(new Transaction(paymentDate,paymentTime,paymentDescription,paymentVendor,convertedUserPaymentAmount));
 
         try {
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("transactions.csv",true));
-            String formattedTransaction = String.format("%s|%s|%s|%s|%.2f\n", paymentDate, paymentTime, paymentDescription, paymentVendor, paymentAmount);
+            String formattedTransaction = String.format("%s|%s|%s|%s|%.2f", paymentDate, paymentTime, paymentDescription, paymentVendor, convertedUserPaymentAmount);
             bufferedWriter.write(formattedTransaction);
             bufferedWriter.newLine();
             bufferedWriter.close();
@@ -95,7 +85,6 @@ public class Main {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
 
     }
 
