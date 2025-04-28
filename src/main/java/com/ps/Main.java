@@ -15,10 +15,10 @@ public class Main {
 
 
         loadTransactions();
+        displayDeposits();
 
         int homeScreenCommand;
 
-        displayLedger();
 //        do {
 //            System.out.println("Welcome to the home screen");
 //            System.out.println("1) Add Deposit");
@@ -156,10 +156,37 @@ public class Main {
 
     private static void displayAll(){
 
-    for (Transaction transaction : transactions){
-        System.out.println(transaction.getDate() + " " + transaction.getVendor() + " " + transaction.getDescription()  + " " + transaction.getAmount() + "\n");
+        System.out.println("Transactions format: Date | Time | Description | Vendor | Amount");
+        for (Transaction transaction : transactions){
+        System.out.printf("%s | %s | %s | %s | %.2f%n", transaction.getDate(),transaction.getTime(),transaction.getDescription(),transaction.getVendor(),transaction.getAmount());
+
     }
     }
+
+    private static void displayDeposits(){
+
+        System.out.println("Transactions format: Date | Time | Description | Vendor | Amount");
+
+        for (Transaction transaction : transactions) {
+            if (transaction.getAmount() > 0){
+                System.out.printf("%s | %s | %s | %s | %.2f%n", transaction.getDate(),transaction.getTime(),transaction.getDescription(),transaction.getVendor(),transaction.getAmount());
+            }
+
+        }
+    }
+
+
+    private static void displayPayments(){
+
+        System.out.println("Transactions format: Date | Time | Description | Vendor | Amount");
+
+        for (Transaction transaction : transactions) {
+            if (transaction.getAmount() < 0){
+                System.out.printf("%s | %s | %s | %s | %.2f%n", transaction.getDate(),transaction.getTime(),transaction.getDescription(),transaction.getVendor(),transaction.getAmount());
+            }
+
+        }
+        }
 
 
 }
