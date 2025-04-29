@@ -27,7 +27,7 @@ public class Main {
             homeScreenCommand = scanner.nextInt();
             scanner.nextLine();
 
-            switch (homeScreenCommand){
+            switch (homeScreenCommand) {
                 case 1:
                     addDeposit();
                     break;
@@ -48,6 +48,7 @@ public class Main {
         }
         while (homeScreenCommand != 0);
     }
+
     private static void loadTransactions() {
 
         try {
@@ -55,7 +56,7 @@ public class Main {
 
             String input;
 
-            while ((input = bufferedReader.readLine()) != null){
+            while ((input = bufferedReader.readLine()) != null) {
                 String[] fields = input.split("\\|");
 
                 LocalDate date = LocalDate.parse(fields[0]);
@@ -64,7 +65,7 @@ public class Main {
                 String vendor = fields[3];
                 double amount = Double.parseDouble(fields[4]);
 
-                Transaction transaction = new Transaction(date,time,description,vendor,amount);
+                Transaction transaction = new Transaction(date, time, description, vendor, amount);
 
                 transactions.add(transaction);
             }
@@ -82,7 +83,7 @@ public class Main {
 
         System.out.println("Please enter the time of the Deposit(format hh:mm:ss): ");
         String depositTimeInString = scanner.nextLine();
-        LocalTime depositTime =  LocalTime.parse(depositTimeInString);
+        LocalTime depositTime = LocalTime.parse(depositTimeInString);
 
         System.out.println("Please enter the description of the Deposit: ");
         String depositDescription = scanner.nextLine();
@@ -94,11 +95,11 @@ public class Main {
         double depositAmount = scanner.nextDouble();
 
 
-        transactions.add(new Transaction(depositDate,depositTime,depositDescription,depositVendor,depositAmount));
+        transactions.add(new Transaction(depositDate, depositTime, depositDescription, depositVendor, depositAmount));
 
         try {
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("transactions.csv",true));
-            String formattedTransaction = String.format("%s|%s|%s|%s|%.2f", depositDate,depositTime,depositDescription,depositVendor,depositAmount);
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("transactions.csv", true));
+            String formattedTransaction = String.format("%s|%s|%s|%s|%.2f", depositDate, depositTime, depositDescription, depositVendor, depositAmount);
             bufferedWriter.write(formattedTransaction);
             System.out.println("✅ Deposit added successfully!");
             bufferedWriter.newLine();
@@ -117,7 +118,7 @@ public class Main {
 
         System.out.println("Please enter the time of the Payment(format hh:mm:ss): ");
         String paymentTimeInString = scanner.nextLine();
-        LocalTime paymentTime =  LocalTime.parse(paymentTimeInString);
+        LocalTime paymentTime = LocalTime.parse(paymentTimeInString);
 
         System.out.println("Please enter the description of the payment: ");
         String paymentDescription = scanner.nextLine();
@@ -129,10 +130,10 @@ public class Main {
         double userPaymentAmount = scanner.nextDouble();
         double convertedUserPaymentAmount = userPaymentAmount * -1;
 
-        transactions.add(new Transaction(paymentDate,paymentTime,paymentDescription,paymentVendor,convertedUserPaymentAmount));
+        transactions.add(new Transaction(paymentDate, paymentTime, paymentDescription, paymentVendor, convertedUserPaymentAmount));
 
         try {
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("transactions.csv",true));
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("transactions.csv", true));
             String formattedTransaction = String.format("%s|%s|%s|%s|%.2f", paymentDate, paymentTime, paymentDescription, paymentVendor, convertedUserPaymentAmount);
             bufferedWriter.write(formattedTransaction);
             System.out.println("✅ Payment added successfully!");
@@ -145,21 +146,21 @@ public class Main {
 
     }
 
-
+    //make all lowercase
     private static void displayLedger() {
 
         int ledgerCallInput;
         do {
             System.out.println("Welcome to the ledger");
-            System.out.println("1)ALl Transactions");
+            System.out.println("1)All Transactions");
             System.out.println("2)Deposit");
             System.out.println("3)Payments");
             System.out.println("4)Reports");
-            System.out.println("0)Go back to the HomesScreen ");
+            System.out.println("0)Go back to the HomeScreen ");
             ledgerCallInput = scanner.nextInt();
             scanner.nextLine();
 
-            switch (ledgerCallInput){
+            switch (ledgerCallInput) {
                 case 1:
                     displayAll();
                     break;
@@ -182,20 +183,20 @@ public class Main {
                     System.out.println("Wrong Choice entered please try again");
             }
 
-        }while (ledgerCallInput != 0);
+        } while (ledgerCallInput != 0);
 
     }
 
 
-    private static void displayAll(){
+    private static void displayAll() {
 
         System.out.println("Transactions format: Date | Time | Description | Vendor | Amount");
-        for (Transaction transaction : transactions){
+        for (Transaction transaction : transactions) {
             printTransaction(transaction);
-    }
+        }
     }
 
-    private static void handleReportCall(){
+    private static void handleReportCall() {
         int reportCallInput;
 
         do {
@@ -210,7 +211,7 @@ public class Main {
             reportCallInput = scanner.nextInt();
             scanner.nextLine();
 
-            switch (reportCallInput){
+            switch (reportCallInput) {
                 case 1:
                     displayMonthToDate();
                     break;
@@ -235,43 +236,56 @@ public class Main {
                 default:
                     System.out.println("Wrong choice please try again");
             }
-        }while (reportCallInput != 0);
+        } while (reportCallInput != 0);
 
     }
 
-    private static void displayDeposits(){
+    private static void displayDeposits() {
 
         System.out.println("Transactions format: Date | Time | Description | Vendor | Amount");
 
         for (Transaction transaction : transactions) {
-            if (transaction.getAmount() > 0){
-                printTransaction(transaction);            }
+            if (transaction.getAmount() > 0) {
+                printTransaction(transaction);
+            }
 
         }
     }
 
+//if its 0 handle this ,
+    //maybe empty payment to someone else
+    //handle edge cases
+    //consider valiadtion
+    //make sure it doesn't crash
 
-    private static void displayPayments(){
+    //a bunch of try and catches
+    //research error handling
+    //and exception handling
+    //u can use throws and parent method handles
+
+    private static void displayPayments() {
 
         System.out.println("Transactions format: Date | Time | Description | Vendor | Amount");
 
         for (Transaction transaction : transactions) {
-            if (transaction.getAmount() < 0){
-                printTransaction(transaction);            }
+            if (transaction.getAmount() < 0) {
+                printTransaction(transaction);
+            }
 
         }
-        }
+    }
 
-        private static void displayMonthToDate() {
+    private static void displayMonthToDate() {
 
-            LocalDate timeNow = LocalDate.now();
-
-            for (Transaction transaction : transactions) {
-                if (transaction.getDate().getMonth() == timeNow.getMonth() &&
-                        transaction.getDate().getYear() == timeNow.getYear()) {
-                    printTransaction(transaction);                }
+        LocalDate timeNow = LocalDate.now();
+//make this look a little prettier
+        for (Transaction transaction : transactions) {
+            if (transaction.getDate().getMonth() == timeNow.getMonth() &&
+                    transaction.getDate().getYear() == timeNow.getYear()) {
+                printTransaction(transaction);
             }
         }
+    }
 
     private static void displayPreviousMonth() {
 
@@ -281,7 +295,8 @@ public class Main {
         for (Transaction transaction : transactions) {
             if (transaction.getDate().getMonth() == previousMonth.getMonth() &&
                     transaction.getDate().getYear() == previousMonth.getYear()) {
-                printTransaction(transaction);            }
+                printTransaction(transaction);
+            }
         }
     }
 
@@ -291,7 +306,8 @@ public class Main {
 
         for (Transaction transaction : transactions) {
             if (transaction.getDate().getYear() == timeNow.getYear()) {
-                printTransaction(transaction);            }
+                printTransaction(transaction);
+            }
         }
     }
 
@@ -302,11 +318,21 @@ public class Main {
 
         for (Transaction transaction : transactions) {
             if (transaction.getDate().getYear() == previousYear.getYear()) {
-                printTransaction(transaction);            }
+                printTransaction(transaction);
+            }
         }
     }
 
     private static void searchByVendor() {
+//make it partial
+        //what if somone does ama
+        //make sure to add to readMe if somethign adidontal is added
+        //notate what you spent extra time on
+        //seperate
+        //alt option for vendor display
+        //use a set for this more complicated
+        //store in set simialr to array list, only unique value
+        //notate this in readMe used set
 
         System.out.println("Please enter the name of the Vendor to filter search: ");
         String userVendorFilter = scanner.nextLine();
@@ -316,23 +342,27 @@ public class Main {
             }
         }
     }
-    private static void printTransaction(Transaction transaction){
+
+    private static void printTransaction(Transaction transaction) {
         System.out.printf("%s | %s | %s | %s | %.2f%n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
     }
 
 
-    private static void customSearch(){
-        System.out.println("Enter start date: ");
+    private static void customSearch() {
+        System.out.println("Enter start date: "); //specifiy format
+        //extra thing would be handling multiple types of date
+        //enter 3 differnt ways
+        //american way
         String startDateInputPreProcessed = scanner.nextLine().trim();
         LocalDate startDate = null;
-        if (!startDateInputPreProcessed.isBlank()){
+        if (!startDateInputPreProcessed.isBlank()) {
             startDate = LocalDate.parse(startDateInputPreProcessed);
         }
 
         System.out.println("Enter end date: ");
         String endDateInputPreProcessed = scanner.nextLine().trim();
         LocalDate endDate = null;
-        if (!endDateInputPreProcessed.isBlank()){
+        if (!endDateInputPreProcessed.isBlank()) {
             endDate = LocalDate.parse(endDateInputPreProcessed);
         }
 
@@ -342,30 +372,38 @@ public class Main {
         System.out.println("Enter vendor: ");
         String vendorInput = scanner.nextLine().trim();
 
-        System.out.println("Enter the exact amount of the transaction or 0 if unsure");
+        System.out.println("Enter the exact amount of the transaction or 0 if unsure"); //exact amount bad
+        //no one gonna know exact amount
+        //make it a range
+        // reformat this to seperate method for handling date range
+        //look up helper method
+        //given transactions
+        //method that gets a bunch of transactions and it auto handles
+        //reusuable date range logic
+        //given range
         double amountInput = scanner.nextDouble();
         scanner.nextLine();
 
 
-        for (Transaction transaction : transactions){
+        for (Transaction transaction : transactions) {
             boolean matchFound = true;
 
-            if (startDate != null && transaction.getDate().isBefore(startDate)){
+            if (startDate != null && transaction.getDate().isBefore(startDate)) {
                 matchFound = false;
             }
-            if (endDate!= null && transaction.getDate().isAfter(endDate)){
+            if (endDate != null && transaction.getDate().isAfter(endDate)) {
                 matchFound = false;
             }
-            if (!descriptionInput.isBlank() && !transaction.getDescription().contains(descriptionInput)){
+            if (!descriptionInput.isBlank() && !transaction.getDescription().contains(descriptionInput)) {
                 matchFound = false;
             }
-            if (!vendorInput.isBlank() && !transaction.getVendor().equalsIgnoreCase(vendorInput)){
+            if (!vendorInput.isBlank() && !transaction.getVendor().equalsIgnoreCase(vendorInput)) {
                 matchFound = false;
             }
-            if (amountInput != 0 &&  transaction.getAmount() != amountInput){
+            if (amountInput != 0 && transaction.getAmount() != amountInput) {
                 matchFound = false;
             }
-            if (matchFound){
+            if (matchFound) {
                 printTransaction(transaction);
             }
 
