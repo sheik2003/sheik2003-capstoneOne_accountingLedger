@@ -14,40 +14,38 @@ public class Main {
 
 
         loadTransactions();
-        searchByVendor();
-
         int homeScreenCommand;
 
-//        do {
-//            System.out.println("Welcome to the home screen");
-//            System.out.println("1) Add Deposit");
-//            System.out.println("2) Make Payment");
-//            System.out.println("3) Ledger");
-//            System.out.println("0) Exit");
-//            System.out.println("What would you like to do? ");
-//            homeScreenCommand = scanner.nextInt();
-//            scanner.nextLine();
-//
-//            switch (homeScreenCommand){
-//                case 1:
-//                    addDeposit();
-//                    break;
-//                case 2:
-//                    makePayment();
-//                    break;
-//                case 3:
-//                    displayLedger();
-//                    break;
-//                case 0:
-//                    System.out.println("Exiting");
-//                    break;
-//                default:
-//                    System.out.println("Wrong command entered please retry again with a valid choice ");
-//
-//            }
-//
-//        }
-//        while (homeScreenCommand != 0);
+        do {
+            System.out.println("Welcome to the home screen");
+            System.out.println("1) Add Deposit");
+            System.out.println("2) Make Payment");
+            System.out.println("3) Ledger");
+            System.out.println("0) Exit");
+            System.out.println("What would you like to do? ");
+            homeScreenCommand = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (homeScreenCommand){
+                case 1:
+                    addDeposit();
+                    break;
+                case 2:
+                    makePayment();
+                    break;
+                case 3:
+                    displayLedger();
+                    break;
+                case 0:
+                    System.out.println("Exiting");
+                    break;
+                default:
+                    System.out.println("Wrong command entered please retry again with a valid choice ");
+
+            }
+
+        }
+        while (homeScreenCommand != 0);
     }
     private static void loadTransactions() {
 
@@ -148,7 +146,39 @@ public class Main {
 
 
     private static void displayLedger() {
-        displayAll();
+
+        int ledgerCallInput;
+        do {
+            System.out.println("Welcome to the ledger");
+            System.out.println("1)Display ALl");
+            System.out.println("2)Display Deposit");
+            System.out.println("3)Display Payments");
+            System.out.println("4)Display Reports");
+            System.out.println("0)Go back to the HomesScreen ");
+            ledgerCallInput = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (ledgerCallInput){
+                case 1:
+                    displayAll();
+                    break;
+                case 2:
+                    displayDeposits();
+                    break;
+                case 3:
+                    displayPayments();
+                    break;
+                case 4:
+                    handleReportCall();
+                    break;
+                case 0:
+                    System.out.println("Going back to the homeScreen...");
+                    break;
+                default:
+                    System.out.println("Wrong Choice entered please try again");
+            }
+
+        }while (ledgerCallInput != 0);
 
     }
 
@@ -160,6 +190,44 @@ public class Main {
         System.out.printf("%s | %s | %s | %s | %.2f%n", transaction.getDate(),transaction.getTime(),transaction.getDescription(),transaction.getVendor(),transaction.getAmount());
 
     }
+    }
+
+    private static void handleReportCall(){
+        int reportCallInput;
+
+        do {
+            System.out.println("1)Display Month to date");
+            System.out.println("2)Display Previous Month");
+            System.out.println("3)Display Year to date");
+            System.out.println("4)Display Previous Year");
+            System.out.println("5)Search by Vendor");
+            System.out.println("0)Go back to Ledger Screen");
+
+            reportCallInput = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (reportCallInput){
+                case 1:
+                    displayMonthToDate();
+                    break;
+                case 2:
+                    displayPreviousMonth();
+                    break;
+                case 3:
+                    displayYearToDate();
+                    break;
+                case 4:
+                    displayPreviousYear();
+                case 5:
+                    searchByVendor();
+                case 0:
+                    System.out.println("Going back to Ledger page...");
+                    break;
+                default:
+                    System.out.println("Wrong choice please try again");
+            }
+        }while (reportCallInput != 0);
+
     }
 
     private static void displayDeposits(){
@@ -199,7 +267,7 @@ public class Main {
             }
         }
 
-    private static void displayPreviousMonthToDate() {
+    private static void displayPreviousMonth() {
 
         LocalDate timeNow = LocalDate.now();
         LocalDate previousMonth = timeNow.minusMonths(1);
@@ -246,6 +314,15 @@ public class Main {
             }
         }
     }
+
+    private static void customSearch(){
+        System.out.println("Enter start date: ");
+
+        for (Transaction transaction : transactions){
+
+        }
+    }
+
 
 }
 
