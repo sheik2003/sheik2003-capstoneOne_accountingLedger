@@ -14,6 +14,7 @@ public class Main {
 
 
         loadTransactions();
+
         int homeScreenCommand;
 
         do {
@@ -203,6 +204,7 @@ public class Main {
             System.out.println("3)Display Year to date");
             System.out.println("4)Display Previous Year");
             System.out.println("5)Search by Vendor");
+            System.out.println("6)Custom search");
             System.out.println("0)Go back to Ledger Screen");
 
             reportCallInput = scanner.nextInt();
@@ -223,6 +225,9 @@ public class Main {
                     break;
                 case 5:
                     searchByVendor();
+                    break;
+                case 6:
+                    customSearch();
                     break;
                 case 0:
                     System.out.println("Going back to Ledger page...");
@@ -316,14 +321,57 @@ public class Main {
     }
 
 
-//    private static void customSearch(){
-//        System.out.println("Enter start date: ");
-//
-//        for (Transaction transaction : transactions){
-//
-//        }
-//    }
+    private static void customSearch(){
+        System.out.println("Enter start date: ");
+        String startDateInputPreProcessed = scanner.nextLine().trim();
+        LocalDate startDate = null;
+        if (!startDateInputPreProcessed.isBlank()){
+            startDate = LocalDate.parse(startDateInputPreProcessed);
+        }
 
+        System.out.println("Enter end date: ");
+        String endDateInputPreProcessed = scanner.nextLine().trim();
+        LocalDate endDate = null;
+        if (!endDateInputPreProcessed.isBlank()){
+            endDate = LocalDate.parse(endDateInputPreProcessed);
+        }
+
+        System.out.println("Enter description keyword: ");
+        String descriptionInput = scanner.nextLine().trim();
+
+        System.out.println("Enter vendor: ");
+        String vendorInput = scanner.nextLine().trim();
+
+        System.out.println("Enter the exact amount of the transaction or 0 if unsure");
+        double amountInput = scanner.nextDouble();
+        scanner.nextLine();
+
+
+        for (Transaction transaction : transactions){
+            boolean matchFound = true;
+
+            if (startDate != null && transaction.getDate().isBefore(startDate)){
+                matchFound = false;
+            }
+            if (endDate!= null && transaction.getDate().isAfter(endDate)){
+                matchFound = false;
+            }
+            if (!descriptionInput.isBlank() && !transaction.getDescription().contains(descriptionInput)){
+                matchFound = false;
+            }
+            if (!vendorInput.isBlank() && !transaction.getVendor().equalsIgnoreCase(vendorInput)){
+                matchFound = false;
+            }
+            if (amountInput != 0 &&  transaction.getAmount() != amountInput){
+                matchFound = false;
+            }
+            if (matchFound){
+                printTransaction(transaction);
+            }
+
+        }
+
+    }
 
 }
 
