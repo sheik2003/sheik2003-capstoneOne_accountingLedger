@@ -221,8 +221,10 @@ public class Main {
                     break;
                 case 4:
                     displayPreviousYear();
+                    break;
                 case 5:
                     searchByVendor();
+                    break;
                 case 0:
                     System.out.println("Going back to Ledger page...");
                     break;
