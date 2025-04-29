@@ -150,10 +150,10 @@ public class Main {
         int ledgerCallInput;
         do {
             System.out.println("Welcome to the ledger");
-            System.out.println("1)Display ALl");
-            System.out.println("2)Display Deposit");
-            System.out.println("3)Display Payments");
-            System.out.println("4)Display Reports");
+            System.out.println("1)ALl Tranactions");
+            System.out.println("2)Deposit");
+            System.out.println("3)Payments");
+            System.out.println("4)Reports");
             System.out.println("0)Go back to the HomesScreen ");
             ledgerCallInput = scanner.nextInt();
             scanner.nextLine();
@@ -170,6 +170,9 @@ public class Main {
                     break;
                 case 4:
                     handleReportCall();
+                    break;
+                case 5:
+                    searchByVendor();
                     break;
                 case 0:
                     System.out.println("Going back to the homeScreen...");
