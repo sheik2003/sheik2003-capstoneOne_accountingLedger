@@ -14,16 +14,20 @@ public class Main {
 
 
         loadTransactions();
-
         int homeScreenCommand;
+        displayHomeScreenAsciiArt();
 
         do {
-            System.out.println("Welcome to the home screen");
-            System.out.println("1) Add Deposit");
-            System.out.println("2) Make Payment");
-            System.out.println("3) Ledger");
-            System.out.println("0) Exit");
-            System.out.println("What would you like to do? ");
+            System.out.println("\n=====================================");
+            System.out.println("        🏠  Home Screen Menu");
+            System.out.println("=====================================");
+            System.out.println("  [1] 💰 Add Deposit");
+            System.out.println("  [2] 🧾 Make Payment");
+            System.out.println("  [3] 📘 Ledger");
+            System.out.println("  [0] ❌ Exit");
+            System.out.println("=====================================");
+            System.out.print(" What would you like to do? ");
+
             homeScreenCommand = scanner.nextInt();
             scanner.nextLine();
 
@@ -77,6 +81,7 @@ public class Main {
 
     private static void addDeposit() {
 
+        System.out.println("========== 💰 Add Deposit ==========");
         System.out.println("Please enter the date of the Deposit(format yyyy-mm-dd): ");
         String depositDateInString = scanner.nextLine();
         LocalDate depositDate = LocalDate.parse(depositDateInString);
@@ -102,6 +107,7 @@ public class Main {
             String formattedTransaction = String.format("%s|%s|%s|%s|%.2f", depositDate, depositTime, depositDescription, depositVendor, depositAmount);
             bufferedWriter.write(formattedTransaction);
             System.out.println("✅ Deposit added successfully!");
+            System.out.println("====================================");
             bufferedWriter.newLine();
             bufferedWriter.close();
 
@@ -112,6 +118,7 @@ public class Main {
     }
 
     private static void makePayment() {
+        System.out.println("========== 💸 Make Payment ==========");
         System.out.println("Please enter the date of the Payment(format yyyy-mm-dd): ");
         String paymentDateInString = scanner.nextLine();
         LocalDate paymentDate = LocalDate.parse(paymentDateInString);
@@ -137,6 +144,7 @@ public class Main {
             String formattedTransaction = String.format("%s|%s|%s|%s|%.2f", paymentDate, paymentTime, paymentDescription, paymentVendor, convertedUserPaymentAmount);
             bufferedWriter.write(formattedTransaction);
             System.out.println("✅ Payment added successfully!");
+            System.out.println("====================================");
             bufferedWriter.newLine();
             bufferedWriter.close();
 
@@ -151,12 +159,18 @@ public class Main {
 
         int ledgerCallInput;
         do {
-            System.out.println("Welcome to the ledger");
-            System.out.println("1)All Transactions");
-            System.out.println("2)Deposit");
-            System.out.println("3)Payments");
-            System.out.println("4)Reports");
-            System.out.println("0)Go back to the HomeScreen ");
+            System.out.println("\n=====================================");
+            System.out.println("        🧾  Ledger Menu");
+            System.out.println("=====================================");
+            System.out.println("  [1] 📄 All Transactions");
+            System.out.println("  [2] 💰 Deposits");
+            System.out.println("  [3] 💸 Payments");
+            System.out.println("  [4] 📊 Reports");
+            System.out.println("  [0] 🔙 Return to Home Screen");
+            System.out.println("=====================================");
+            System.out.print("Select an option: ");
+
+
             ledgerCallInput = scanner.nextInt();
             scanner.nextLine();
 
@@ -200,13 +214,18 @@ public class Main {
         int reportCallInput;
 
         do {
-            System.out.println("1)Display Month to date");
-            System.out.println("2)Display Previous Month");
-            System.out.println("3)Display Year to date");
-            System.out.println("4)Display Previous Year");
-            System.out.println("5)Search by Vendor");
-            System.out.println("6)Custom search");
-            System.out.println("0)Go back to Ledger Screen");
+            System.out.println("\n=====================================");
+            System.out.println("         📊  Reports Menu");
+            System.out.println("=====================================");
+            System.out.println("  [1] 🗓️  Month-to-Date");
+            System.out.println("  [2] 📅  Previous Month");
+            System.out.println("  [3] 🗓️  Year-to-Date");
+            System.out.println("  [4] 📆  Previous Year");
+            System.out.println("  [5] 🏷️  Search by Vendor");
+            System.out.println("  [6] 🔍 Custom Search");
+            System.out.println("  [0] 🔙 Back to Ledger Menu");
+            System.out.println("=====================================");
+            System.out.print("Select an option: ");
 
             reportCallInput = scanner.nextInt();
             scanner.nextLine();
@@ -408,6 +427,19 @@ public class Main {
             }
 
         }
+
+    }
+
+    private static void displayHomeScreenAsciiArt(){
+
+        System.out.println(" __   __ _   _   ____     _     _   _  _  __ ");
+        System.out.println(" \\ \\ / /| | | | | __ )   / \\   | \\ | || |/ / ");
+        System.out.println("  \\ V / | | | | |  _ \\  / _ \\  |  \\| || ' /  ");
+        System.out.println("   | |  | |_| | | |_) |/ ___ \\ | |\\  || . \\  ");
+        System.out.println("   |_|   \\___/  |____//_/   \\_\\|_| \\_||_|\\_\\ ");
+        System.out.println("                                             ");
+        System.out.println("“Control your money, don’t let it control you” \uD83D\uDCBC\n ");
+
 
     }
 
