@@ -150,7 +150,7 @@ public class Main {
         int ledgerCallInput;
         do {
             System.out.println("Welcome to the ledger");
-            System.out.println("1)ALl Tranactions");
+            System.out.println("1)ALl Transactions");
             System.out.println("2)Deposit");
             System.out.println("3)Payments");
             System.out.println("4)Reports");
@@ -190,8 +190,7 @@ public class Main {
 
         System.out.println("Transactions format: Date | Time | Description | Vendor | Amount");
         for (Transaction transaction : transactions){
-        System.out.printf("%s | %s | %s | %s | %.2f%n", transaction.getDate(),transaction.getTime(),transaction.getDescription(),transaction.getVendor(),transaction.getAmount());
-
+            printTransaction(transaction);
     }
     }
 
@@ -241,8 +240,7 @@ public class Main {
 
         for (Transaction transaction : transactions) {
             if (transaction.getAmount() > 0){
-                System.out.printf("%s | %s | %s | %s | %.2f%n", transaction.getDate(),transaction.getTime(),transaction.getDescription(),transaction.getVendor(),transaction.getAmount());
-            }
+                printTransaction(transaction);            }
 
         }
     }
@@ -254,8 +252,7 @@ public class Main {
 
         for (Transaction transaction : transactions) {
             if (transaction.getAmount() < 0){
-                System.out.printf("%s | %s | %s | %s | %.2f%n", transaction.getDate(),transaction.getTime(),transaction.getDescription(),transaction.getVendor(),transaction.getAmount());
-            }
+                printTransaction(transaction);            }
 
         }
         }
@@ -267,8 +264,7 @@ public class Main {
             for (Transaction transaction : transactions) {
                 if (transaction.getDate().getMonth() == timeNow.getMonth() &&
                         transaction.getDate().getYear() == timeNow.getYear()) {
-                    System.out.printf("%s | %s | %s | %s | %.2f%n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
-                }
+                    printTransaction(transaction);                }
             }
         }
 
@@ -280,8 +276,7 @@ public class Main {
         for (Transaction transaction : transactions) {
             if (transaction.getDate().getMonth() == previousMonth.getMonth() &&
                     transaction.getDate().getYear() == previousMonth.getYear()) {
-                System.out.printf("%s | %s | %s | %s | %.2f%n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
-            }
+                printTransaction(transaction);            }
         }
     }
 
@@ -291,8 +286,7 @@ public class Main {
 
         for (Transaction transaction : transactions) {
             if (transaction.getDate().getYear() == timeNow.getYear()) {
-                System.out.printf("%s | %s | %s | %s | %.2f%n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
-            }
+                printTransaction(transaction);            }
         }
     }
 
@@ -303,8 +297,7 @@ public class Main {
 
         for (Transaction transaction : transactions) {
             if (transaction.getDate().getYear() == previousYear.getYear()) {
-                System.out.printf("%s | %s | %s | %s | %.2f%n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
-            }
+                printTransaction(transaction);            }
         }
     }
 
@@ -314,19 +307,22 @@ public class Main {
         String userVendorFilter = scanner.nextLine();
         for (Transaction transaction : transactions) {
             if (userVendorFilter.equalsIgnoreCase(transaction.getVendor())) {
-                System.out.printf("%s | %s | %s | %s | %.2f%n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
-
+                printTransaction(transaction);
             }
         }
     }
-
-    private static void customSearch(){
-        System.out.println("Enter start date: ");
-
-        for (Transaction transaction : transactions){
-
-        }
+    private static void printTransaction(Transaction transaction){
+        System.out.printf("%s | %s | %s | %s | %.2f%n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
     }
+
+
+//    private static void customSearch(){
+//        System.out.println("Enter start date: ");
+//
+//        for (Transaction transaction : transactions){
+//
+//        }
+//    }
 
 
 }
