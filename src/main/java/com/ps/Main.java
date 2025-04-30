@@ -14,6 +14,21 @@ public class Main {
     //main
     public static void main(String[] args) {
 
+        //make a report class and make it static to save space
+        //hash map for vendor summarry
+        //name of vendor as key
+        //if set, add the total balance
+        //if doesnt exit sets to it
+        //list through all the keys
+        //get all the keys to retrieve the value
+        //.entry
+        //setting them is very efficent
+
+
+//refix variable name to look nicer
+        //put in differnet files to make this file less
+        //create diff classes , one or two more classes don't over do it
+        //look into utility classes
 
         loadTransactions();
         int homeScreenCommand;
@@ -26,6 +41,7 @@ public class Main {
             System.out.println("  [1] 💰 Add Deposit");
             System.out.println("  [2] 🧾 Make Payment");
             System.out.println("  [3] 📘 Ledger");
+            System.out.println("  [4] 📊 Account Summary");
             System.out.println("  [0] ❌ Exit");
             System.out.println("=====================================");
             System.out.print(" What would you like to do? ");
@@ -43,6 +59,8 @@ public class Main {
                 case 3:
                     displayLedger();
                     break;
+                case 4:
+                    accountSummary();
                 case 0:
                     System.out.println("Exiting");
                     break;
@@ -50,10 +68,12 @@ public class Main {
                     System.out.println("Wrong command entered please retry again with a valid choice ");
 
             }
-
+//collections.sort to control the order of transactions ,, pass it a method that determines order buy
         }
         while (homeScreenCommand != 0);
     }
+
+
 
     private static void loadTransactions() {
 
@@ -196,13 +216,71 @@ public class Main {
                     System.out.println("Going back to the homeScreen...");
                     break;
                 default:
-                    System.out.println("Wrong Choice entered please try again");
+                    System.out.println("Wrong Choice entered please try again");//make a nicer message
             }
 
         } while (ledgerCallInput != 0);
+//make sure to do buffered close
+    }
+    private static void accountSummary() {
+
+        int accountSummaryInput;
+
+        do {
+            System.out.println("\n=====================================");
+            System.out.println("        📊 Account Summary");
+            System.out.println("=====================================");
+            System.out.println("  [1] 💵 Current Balance");
+            System.out.println("  [2] \uD83D\uDECD\uFE0F Vendor Spending");
+            System.out.println("  [3] \uD83D\uDCC6 Income vs Expenses");
+            System.out.println("  [0] 🔙 Return to Ledger Menu");
+            System.out.println("=====================================");
+            System.out.print("Select an option: ");
+
+            accountSummaryInput = scanner.nextInt();
+            scanner.nextLine(); //buffer
+
+            switch (accountSummaryInput){
+                case 1:
+                    displayCurrentBalance();
+                    break;
+                case 2:
+                    displayVendorSpending();//implement
+                    break;
+                case 3:
+                    displayIncomeExpense();//implment
+                    break;
+                case 0:
+                    System.out.println("Going back to HomeScreen");
+                    break;
+                default:
+                    System.out.println("Wrong Choice entered please try again");
+
+            }
+
+
+        }
+        while (accountSummaryInput != 0);
+
 
     }
 
+    private static void displayIncomeExpense() {
+    }
+
+    private static void displayVendorSpending() {
+    }
+
+    private static void displayCurrentBalance() {
+
+        double currentUserBalance = 0;
+        for (Transaction transaction:transactions){
+            currentUserBalance += transaction.getAmount();
+        }
+        System.out.println("=====================================");
+        System.out.printf("     Your Current Balance is:\n\n");
+        System.out.printf("           💰 $%,.2f%n", currentUserBalance);
+    }
 
     private static void displayAll() {
 
