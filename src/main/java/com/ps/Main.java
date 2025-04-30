@@ -3,7 +3,9 @@ package com.ps;
 import java.io.*;
 import java.time.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Main {
     static Scanner scanner = new Scanner(System.in);
@@ -83,18 +85,18 @@ public class Main {
 
         System.out.println("========== 💰 Add Deposit ==========");
         System.out.println("Please enter the date of the Deposit(format yyyy-mm-dd): ");
-        String depositDateInString = scanner.nextLine();
+        String depositDateInString = scanner.nextLine().trim();
         LocalDate depositDate = LocalDate.parse(depositDateInString);
 
         System.out.println("Please enter the time of the Deposit(format hh:mm:ss): ");
-        String depositTimeInString = scanner.nextLine();
+        String depositTimeInString = scanner.nextLine().trim();
         LocalTime depositTime = LocalTime.parse(depositTimeInString);
 
         System.out.println("Please enter the description of the Deposit: ");
-        String depositDescription = scanner.nextLine();
+        String depositDescription = scanner.nextLine().trim();
 
         System.out.println("Please enter the name of the Vendor: ");
-        String depositVendor = scanner.nextLine();
+        String depositVendor = scanner.nextLine().trim();
 
         System.out.println("Please enter the payment amount: ");
         double depositAmount = scanner.nextDouble();
@@ -120,18 +122,18 @@ public class Main {
     private static void makePayment() {
         System.out.println("========== 💸 Make Payment ==========");
         System.out.println("Please enter the date of the Payment(format yyyy-mm-dd): ");
-        String paymentDateInString = scanner.nextLine();
+        String paymentDateInString = scanner.nextLine().trim();
         LocalDate paymentDate = LocalDate.parse(paymentDateInString);
 
         System.out.println("Please enter the time of the Payment(format hh:mm:ss): ");
-        String paymentTimeInString = scanner.nextLine();
+        String paymentTimeInString = scanner.nextLine().trim();
         LocalTime paymentTime = LocalTime.parse(paymentTimeInString);
 
         System.out.println("Please enter the description of the payment: ");
-        String paymentDescription = scanner.nextLine();
+        String paymentDescription = scanner.nextLine().trim();
 
         System.out.println("Please enter the name of the Vendor: ");
-        String paymentVendor = scanner.nextLine();
+        String paymentVendor = scanner.nextLine().trim();
 
         System.out.println("Please enter the payment amount: ");
         double userPaymentAmount = scanner.nextDouble();
@@ -330,6 +332,8 @@ public class Main {
         }
     }
 
+    // make new transactions appear first
+
     private static void displayPreviousYear() {
 
         LocalDate timeNow = LocalDate.now();
@@ -352,7 +356,8 @@ public class Main {
         //use a set for this more complicated
         //store in set simialr to array list, only unique value
         //notate this in readMe used set
-
+        displayVendorList();
+        System.out.println("\n");
         System.out.println("Please enter the name of the Vendor to filter search: ");
         String userVendorFilter = scanner.nextLine();
         for (Transaction transaction : transactions) {
@@ -360,6 +365,19 @@ public class Main {
                 printTransaction(transaction);
             }
         }
+    }
+
+    private static void displayVendorList(){
+        Set<String> vendors = new HashSet<>() ;
+        for (Transaction transaction:transactions){
+            vendors.add(transaction.getVendor());
+        }
+        System.out.println("\n📋 Unique Vendors List:");
+        System.out.println("========================");
+        for (String vendor : vendors) {
+            System.out.println("• " + vendor);
+        }
+        System.out.println("========================");
     }
 
     private static void printTransaction(Transaction transaction) {
