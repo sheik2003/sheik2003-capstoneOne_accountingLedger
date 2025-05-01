@@ -339,11 +339,40 @@ public class Main {
 
     private static void thisYearsSummary() {
 
+        LocalDate timeNow = LocalDate.now();
+        Map<String,Double> yearToDateSummary = new HashMap<>();
 
+        for (Transaction transaction:transactions){
+            if (transaction.getDate() .getYear() == timeNow. getYear()) {
+
+                if (transaction.getAmount() > 0) {
+                    //when setting keys make it lower case
+                    //key shouldn't be displayed
+                    double currentIncome = yearToDateSummary.getOrDefault("income", 0.0);
+                    yearToDateSummary.put("income", currentIncome + transaction.getAmount());
+
+                } else {
+                    double currentExpense = yearToDateSummary.getOrDefault("expense", 0.0);
+                    yearToDateSummary.put("expense", currentExpense + Math.abs(transaction.getAmount()));
+                }
+
+
+        }
+        }
+
+        for (Map.Entry<String, Double> entry : yearToDateSummary.entrySet()) {
+            System.out.println(entry.getKey() + ": $" + String.format("%.2f", entry.getValue()));
+        }
+//what if empty **something to think about**
+        //if other categories hashmap would be a good fit
+        double income = yearToDateSummary.getOrDefault("income", 0.0);
+        double expense = yearToDateSummary.getOrDefault("expense", 0.0);
+        double profit = income - expense;
+        System.out.printf("Profit: $%.2f\n", profit);
     }
 
     private static void lastMonthSummary() {
-        Map<String, Double> accountSummary = new HashMap<>();
+        Map<String, Double> lastMonthSummary = new HashMap<>();
         // if within previous month
         LocalDate timeNow = LocalDate.now();
         LocalDate previousMonth = timeNow.minusMonths(1);
@@ -357,23 +386,23 @@ public class Main {
                 if (transaction.getAmount() > 0) {
                     //when setting keys make it lower case
                     //key shouldn't be displayed
-                    double currentIncome = accountSummary.getOrDefault("income", 0.0);
-                    accountSummary.put("income", currentIncome + transaction.getAmount());
+                    double currentIncome = lastMonthSummary.getOrDefault("income", 0.0);
+                    lastMonthSummary.put("income", currentIncome + transaction.getAmount());
 
                 } else {
-                    double currentExpense = accountSummary.getOrDefault("expense", 0.0);
-                    accountSummary.put("expense", currentExpense + Math.abs(transaction.getAmount()));
+                    double currentExpense = lastMonthSummary.getOrDefault("expense", 0.0);
+                    lastMonthSummary.put("expense", currentExpense + Math.abs(transaction.getAmount()));
                 }
             }
         }
 
-        for (Map.Entry<String, Double> entry : accountSummary.entrySet()) {
+        for (Map.Entry<String, Double> entry : lastMonthSummary.entrySet()) {
             System.out.println(entry.getKey() + ": $" + String.format("%.2f", entry.getValue()));
         }
 //what if empty **something to think about**
         //if other categories hashmap would be a good fit
-        double income = accountSummary.getOrDefault("income", 0.0);
-        double expense = accountSummary.getOrDefault("expense", 0.0);
+        double income = lastMonthSummary.getOrDefault("income", 0.0);
+        double expense = lastMonthSummary.getOrDefault("expense", 0.0);
         double profit = income - expense;
         System.out.printf("Profit: $%.2f\n", profit);
     }
