@@ -2,10 +2,7 @@ package com.ps;
 
 import java.io.*;
 import java.time.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class Main {
     static Scanner scanner = new Scanner(System.in);
@@ -232,7 +229,7 @@ public class Main {
             System.out.println("=====================================");
             System.out.println("  [1] 💵 Current Balance");
             System.out.println("  [2] \uD83D\uDECD\uFE0F Vendor Spending");
-            System.out.println("  [3] \uD83D\uDCC6 Income vs Expenses");
+            System.out.println("  [3] \uD83D\uDCC6 Spending Summary");
             System.out.println("  [0] 🔙 Return to Ledger Menu");
             System.out.println("=====================================");
             System.out.print("Select an option: ");
@@ -248,7 +245,7 @@ public class Main {
                     displayVendorSpending();//implement
                     break;
                 case 3:
-                    displayIncomeExpense();//implment
+                    displaySpendingSummary();//implment
                     break;
                 case 0:
                     System.out.println("Going back to HomeScreen");
@@ -265,11 +262,7 @@ public class Main {
 
     }
 
-    private static void displayIncomeExpense() {
-    }
 
-    private static void displayVendorSpending() {
-    }
 
     private static void displayCurrentBalance() {
 
@@ -281,6 +274,35 @@ public class Main {
         System.out.printf("     Your Current Balance is:\n\n");
         System.out.printf("           💰 $%,.2f%n", currentUserBalance);
     }
+
+
+    private static void displayVendorSpending() {
+
+        Map<String, Double> vendorTotals = new HashMap<>();
+
+        for (Transaction transaction:transactions){
+
+            //check if tbe vendor is already in if in add to it
+            if (vendorTotals.containsKey(transaction.getVendor())){
+                double currentTotal = vendorTotals.get(transaction.getVendor());
+                vendorTotals.put(transaction.getVendor(),currentTotal+ transaction.getAmount());
+            }
+            else
+            {
+                vendorTotals.put(transaction.getVendor(), transaction.getAmount());
+            }
+            for (Map.Entry<String,Double>entry : vendorTotals.entrySet()){
+                System.out.println("Vendor: " + entry.getKey()+ "| Total: " + entry.getValue());
+            }
+
+        }
+
+    }
+
+
+    private static void displaySpendingSummary() {
+    }
+
 
     private static void displayAll() {
 
