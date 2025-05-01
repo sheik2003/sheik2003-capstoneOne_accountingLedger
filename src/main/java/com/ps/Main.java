@@ -323,7 +323,7 @@ public class Main {
                     thisYearsSummary();
                     break;
                 case 4:
-                    //lastYearSummary();
+                    lastYearSummary();
                     break;
                 case 0:
                     System.out.println("Exiting...");
@@ -337,39 +337,77 @@ public class Main {
 
     }
 
+    private static void lastYearSummary() {
+
+        LocalDate timeNow = LocalDate.now();
+        LocalDate lastYear = timeNow.minusYears(1);
+        Map<String,Double> lastYearToDateSummary = new HashMap<>();
+
+        for (Transaction transaction:transactions){
+            if (transaction.getDate() .getYear() == lastYear.getYear()) {
+
+                if (transaction.getAmount() > 0) {
+                    //when setting keys make it lower case
+                    //key shouldn't be displayed
+                    double currentIncome = lastYearToDateSummary.getOrDefault("income", 0.0);
+                    lastYearToDateSummary.put("income", currentIncome + transaction.getAmount());
+
+                } else {
+                    double currentExpense = lastYearToDateSummary.getOrDefault("expense", 0.0);
+                    lastYearToDateSummary.put("expense", currentExpense + Math.abs(transaction.getAmount()));
+                }
+            }
+
+
+
+        }
+
+        for (Map.Entry<String, Double> entry : lastYearToDateSummary.entrySet()) {
+            System.out.println(entry.getKey() + ": $" + String.format("%.2f", entry.getValue()));
+        }
+        //what if empty **something to think about**
+        //if other categories hashmap would be a good fit
+        double income = lastYearToDateSummary.getOrDefault("income", 0.0);
+        double expense = lastYearToDateSummary.getOrDefault("expense", 0.0);
+
+        displayBarSummary(income,expense);
+
+
+    }
+
     private static void thisYearsSummary() {
 
         LocalDate timeNow = LocalDate.now();
         Map<String,Double> yearToDateSummary = new HashMap<>();
 
         for (Transaction transaction:transactions){
-            if (transaction.getDate() .getYear() == timeNow. getYear()) {
+        if (transaction.getDate() .getYear() == timeNow. getYear()) {
 
-                if (transaction.getAmount() > 0) {
-                    //when setting keys make it lower case
-                    //key shouldn't be displayed
-                    double currentIncome = yearToDateSummary.getOrDefault("income", 0.0);
-                    yearToDateSummary.put("income", currentIncome + transaction.getAmount());
+            if (transaction.getAmount() > 0) {
+                //when setting keys make it lower case
+                //key shouldn't be displayed
+                double currentIncome = yearToDateSummary.getOrDefault("income", 0.0);
+                yearToDateSummary.put("income", currentIncome + transaction.getAmount());
 
-                } else {
-                    double currentExpense = yearToDateSummary.getOrDefault("expense", 0.0);
-                    yearToDateSummary.put("expense", currentExpense + Math.abs(transaction.getAmount()));
-                }
+            } else {
+                double currentExpense = yearToDateSummary.getOrDefault("expense", 0.0);
+                yearToDateSummary.put("expense", currentExpense + Math.abs(transaction.getAmount()));
+            }
 
 
         }
-        }
+    }
 
         for (Map.Entry<String, Double> entry : yearToDateSummary.entrySet()) {
-            System.out.println(entry.getKey() + ": $" + String.format("%.2f", entry.getValue()));
-        }
-//what if empty **something to think about**
-        //if other categories hashmap would be a good fit
-        double income = yearToDateSummary.getOrDefault("income", 0.0);
-        double expense = yearToDateSummary.getOrDefault("expense", 0.0);
-        double profit = income - expense;
-        System.out.printf("Profit: $%.2f\n", profit);
+        System.out.println(entry.getKey() + ": $" + String.format("%.2f", entry.getValue()));
     }
+    //what if empty **something to think about**
+    //if other categories hashmap would be a good fit
+    double income = yearToDateSummary.getOrDefault("income", 0.0);
+    double expense = yearToDateSummary.getOrDefault("expense", 0.0);
+    double profit = income - expense;
+        System.out.printf("Profit: $%.2f\n", profit);
+}
 
     private static void lastMonthSummary() {
         Map<String, Double> lastMonthSummary = new HashMap<>();
@@ -697,6 +735,25 @@ public class Main {
 
 
     }
+    private static void displayBarSummary(double income, double expense) {
+        int maxBarLength = 30;
+        double maxAmount = Math.max(income, expense);
+        int incomeBarLength = (int) ((income / maxAmount) * maxBarLength);
+        int expenseBarLength = (int) ((expense / maxAmount) * maxBarLength);
+
+        String incomeBar = "█".repeat(incomeBarLength);
+        String expenseBar = "█".repeat(expenseBarLength);
+
+
+        incomeBar = String.format("%-" + maxBarLength + "s", incomeBar);
+        expenseBar = String.format("%-" + maxBarLength + "s", expenseBar);
+
+        System.out.println();
+        System.out.printf("Income  : %s $%.2f%n", incomeBar, income);
+        System.out.printf("Expense : %s $%.2f%n", expenseBar, expense);
+        System.out.printf("Profit  : $%.2f%n", income - expense);
+    }
+
 
 }
 
