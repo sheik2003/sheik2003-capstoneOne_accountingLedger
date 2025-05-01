@@ -291,16 +291,124 @@ public class Main {
             {
                 vendorTotals.put(transaction.getVendor(), transaction.getAmount());
             }
-            for (Map.Entry<String,Double>entry : vendorTotals.entrySet()){
-                System.out.println("Vendor: " + entry.getKey()+ "| Total: " + entry.getValue());
-            }
 
         }
-
+        for (Map.Entry<String,Double>entry : vendorTotals.entrySet()){
+            System.out.println("Vendor: " + entry.getKey()+ "| Total: " + entry.getValue());
+        }
     }
 
 
     private static void displaySpendingSummary() {
+        int spendingSummaryInput = 0;
+
+        do {
+            System.out.println("1)This months spending ");
+            System.out.println("2)Last months spending ");
+            System.out.println("3)Year to Date ");
+            System.out.println("4)Last year");
+            System.out.println("0)Exit");
+
+            spendingSummaryInput = scanner.nextInt();
+            scanner.nextLine();//buffer
+
+            switch (spendingSummaryInput){
+                case 1:
+                    thisMonthSummary();
+                    break;
+                case 2:
+                    lastMonthSummary();
+                    break;
+                case 3:
+                    thisYearsSummary();
+                    break;
+                case 4:
+                    //lastYearSummary();
+                    break;
+                case 0:
+                    System.out.println("Exiting...");
+                    break;
+                default:
+                    System.out.println("Wrong input Please Retry");
+            }
+        }
+        while ( spendingSummaryInput != 0);
+
+
+    }
+
+    private static void thisYearsSummary() {
+
+
+    }
+
+    private static void lastMonthSummary() {
+        Map<String, Double> accountSummary = new HashMap<>();
+        // if within previous month
+        LocalDate timeNow = LocalDate.now();
+        LocalDate previousMonth = timeNow.minusMonths(1);
+//time.now.getYear
+        //doesn't read as easily
+        //this doesn't read as easuk
+        for (Transaction transaction : transactions) {
+            if (transaction.getDate().getMonth() == previousMonth.getMonth() &&
+                    transaction.getDate().getYear() == previousMonth.getYear()) {
+
+                if (transaction.getAmount() > 0) {
+                    //when setting keys make it lower case
+                    //key shouldn't be displayed
+                    double currentIncome = accountSummary.getOrDefault("income", 0.0);
+                    accountSummary.put("income", currentIncome + transaction.getAmount());
+
+                } else {
+                    double currentExpense = accountSummary.getOrDefault("expense", 0.0);
+                    accountSummary.put("expense", currentExpense + Math.abs(transaction.getAmount()));
+                }
+            }
+        }
+
+        for (Map.Entry<String, Double> entry : accountSummary.entrySet()) {
+            System.out.println(entry.getKey() + ": $" + String.format("%.2f", entry.getValue()));
+        }
+//what if empty **something to think about**
+        //if other categories hashmap would be a good fit
+        double income = accountSummary.getOrDefault("income", 0.0);
+        double expense = accountSummary.getOrDefault("expense", 0.0);
+        double profit = income - expense;
+        System.out.printf("Profit: $%.2f\n", profit);
+    }
+
+    private static void thisMonthSummary() {
+        Map<String, Double> accountSummary = new HashMap<>();
+        //if within this month
+        LocalDate timeNow = LocalDate.now();
+        for (Transaction transaction:transactions){
+
+            if (transaction.getDate().getMonth() == timeNow.getMonth() &&
+                    transaction.getDate() .getYear () == timeNow.getYear()){
+
+
+                if (transaction.getAmount() > 0){
+                    double currentIncome = accountSummary.getOrDefault("Income", 0.0);
+                    accountSummary.put("Income", currentIncome + transaction.getAmount());
+
+                }
+                else {
+                    double currentExpense = accountSummary.getOrDefault("Expense", 0.0);
+                    accountSummary.put("Expense", currentExpense + Math.abs(transaction.getAmount()));
+                }
+            }
+
+
+        }
+        for (Map.Entry<String,Double>entries : accountSummary.entrySet()){
+            System.out.println(entries.getKey() + entries.getValue());
+        }
+        double income = accountSummary.getOrDefault("Income",0.0);
+        double expense = accountSummary.getOrDefault("Expense",0.0);
+        double profit = income - expense;
+        System.out.printf("Profit: $%.2f\n", profit);
+
     }
 
 
