@@ -334,6 +334,7 @@ public class Main {
 
         for (Transaction transaction:transactions){
 
+            //check if tbe vendor is already in if in add to it
             if (vendorTotals.containsKey(transaction.getVendor())){
                 double currentTotal = vendorTotals.get(transaction.getVendor());
                 vendorTotals.put(transaction.getVendor(),currentTotal+ transaction.getAmount());
