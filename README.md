@@ -22,11 +22,13 @@ The **Make Payment** feature works similarly to Add Deposit — users enter the 
 ## 📘 Ledger Menu
 
 The **Ledger** menu provides users with options to view and filter their financial activity. Users can view all transactions, filter by deposits or payments, or generate reports based on time periods or vendors.
+
 ![img_4.png](.idea/img_4.png)
 
 ## 📊 Reports Menu
 
 The **Reports** menu gives users powerful insights into their financial activity by filtering transactions over specific time periods or by vendors. It includes options for viewing spending and deposits from the current month, previous month, year-to-date, and previous year. Users can also search transactions by vendor name or perform a custom search using multiple filters.
+
 ![img_5.png](.idea/img_5.png)
 
 ## 📊 Account Summary
