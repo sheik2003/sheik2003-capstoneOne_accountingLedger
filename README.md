@@ -1,6 +1,6 @@
 # 🏠 Home Screen Menu
 
-> ![Home Screen](img.png)
+> ![Home Screen](.idea/img.png)
 
 - **[1] 💰 Add Deposit** – Allows the user to add a deposit to the ledger with details like date, time, vendor, and amount.
 - **[2] 🧾 Make Payment** – Lets the user record a payment transaction that deducts from the account balance.
@@ -10,30 +10,30 @@
 
 ## 💰 Add Deposit
 
-> ![img_1.png](img_1.png)
+> ![img_1.png](.idea/img_1.png)
 
 The **Add Deposit** feature allows users to enter a deposit by providing the date, time, description, vendor, and amount. Once all fields are valid, the deposit is saved to `transactions.csv` and confirmed with a success message.
 
 ## 🧾 Make Payment
->![img_2.png](img_2.png)
+>![img_2.png](.idea/img_2.png)
 The **Make Payment** feature works similarly to Add Deposit — users enter the date, time, description, vendor, and amount of a payment. The key difference is that the amount is stored as a negative value to represent a deduction from the account. Validated input is saved to `transactions.csv`, and a success message confirms the entry.
 
 
 ## 📘 Ledger Menu
 
 The **Ledger** menu provides users with options to view and filter their financial activity. Users can view all transactions, filter by deposits or payments, or generate reports based on time periods or vendors.
-![img_4.png](img_4.png)
+![img_4.png](.idea/img_4.png)
 
 ## 📊 Reports Menu
 
 The **Reports** menu gives users powerful insights into their financial activity by filtering transactions over specific time periods or by vendors. It includes options for viewing spending and deposits from the current month, previous month, year-to-date, and previous year. Users can also search transactions by vendor name or perform a custom search using multiple filters.
-![img_5.png](img_5.png)
+![img_5.png](.idea/img_5.png)
 
 ## 📊 Account Summary
 
 The **Account Summary** menu gives users a snapshot of their financial status. It includes options to view the current balance, analyze spending by vendor, and explore summarized spending trends over various periods. This helps users track where their money is going and make more informed financial decisions.
 
-![img_8.png](img_8.png)
+![img_8.png](.idea/img_8.png)
 
 
 
