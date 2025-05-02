@@ -74,9 +74,7 @@ Designed and aligned ASCII bar graphs to visually compare total income and expen
 🔁 Reusable Helper Functions
 Created helper methods like displayBarSummary() and printTransaction() to reduce code duplication and make the program easier to maintain and expand.
 
-vbnet
-Copy
-Edit
+
 
 
 
