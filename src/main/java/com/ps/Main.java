@@ -8,27 +8,10 @@ public class Main {
     static Scanner scanner = new Scanner(System.in);
     static ArrayList<Transaction> transactions = new ArrayList<>();
 
-    //main
     public static void main(String[] args) {
 
-        //make a report class and make it static to save space
-        //hash map for vendor summarry
-        //name of vendor as key
-        //if set, add the total balance
-        //if doesnt exit sets to it
-        //list through all the keys
-        //get all the keys to retrieve the value
-        //.entry
-        //setting them is very efficent
-
-
-//refix variable name to look nicer
-        //put in differnet files to make this file less
-        //create diff classes , one or two more classes don't over do it
-        //look into utility classes
-
         loadTransactions();
-        int homeScreenCommand;
+        int homeScreenCommand = -1;
         displayHomeScreenAsciiArt();
 
         do {
@@ -48,8 +31,8 @@ public class Main {
             }catch (InputMismatchException e){
                 System.out.println("❌ Invalid input. Please enter a number from the menu.");
                 scanner.nextLine();
-                homeScreenCommand = -1;
 
+                continue;
             }
 
 
@@ -114,7 +97,7 @@ public class Main {
                 String depositDateInString = scanner.nextLine().trim();
                 depositDate = LocalDate.parse(depositDateInString);
             } catch (Exception e) {
-                System.out.println("❌ Invalid date format. Please use yyyy-mm-dd.");
+                System.out.println("❌ Invalid date format.");
             }
         }
 
@@ -125,7 +108,7 @@ public class Main {
                 String depositTimeInString = scanner.nextLine().trim();
                 depositTime = LocalTime.parse(depositTimeInString);
             } catch (Exception e) {
-                System.out.println("❌ Invalid time format. Please use hh:mm:ss.");
+                System.out.println("❌ Invalid time format.");
             }
         }
 
@@ -135,8 +118,19 @@ public class Main {
         System.out.println("Please enter the name of the Vendor: ");
         String depositVendor = scanner.nextLine().trim();
 
-        System.out.println("Please enter the payment amount: ");
-        double depositAmount = scanner.nextDouble();
+        double depositAmount ;
+        while (true) {
+            System.out.println("Please enter the payment amount: ");
+            try {
+                depositAmount = scanner.nextDouble();
+                scanner.nextLine();
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("❌ Invalid input. Please enter a numeric amount.");
+                scanner.nextLine();
+            }
+        }
+
 
 
         transactions.add(new Transaction(depositDate, depositTime, depositDescription, depositVendor, depositAmount));
@@ -166,7 +160,7 @@ public class Main {
                 String paymentDateInString = scanner.nextLine().trim();
                 paymentDate = LocalDate.parse(paymentDateInString);
             } catch (Exception e) {
-                System.out.println("❌ Invalid date format. Please use yyyy-mm-dd.");
+                System.out.println("❌ Invalid date format.");
             }
         }
 
@@ -177,7 +171,7 @@ public class Main {
                 String paymentTimeInString = scanner.nextLine().trim();
                 paymentTime = LocalTime.parse(paymentTimeInString);
             } catch (Exception e) {
-                System.out.println("❌ Invalid time format. Please use hh:mm:ss.");
+                System.out.println("❌ Invalid time format");
             }
         }
 
@@ -188,8 +182,19 @@ public class Main {
         System.out.println("Please enter the name of the Vendor: ");
         String paymentVendor = scanner.nextLine().trim();
 
-        System.out.println("Please enter the payment amount: ");
-        double userPaymentAmount = scanner.nextDouble();
+        double userPaymentAmount ;
+        while (true) {
+            System.out.println("Please enter the payment amount: ");
+            try {
+                userPaymentAmount = scanner.nextDouble();
+                scanner.nextLine();
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("❌ Invalid input. Please enter a numeric amount.");
+                scanner.nextLine();
+            }
+        }
+
         double convertedUserPaymentAmount = userPaymentAmount * -1;
 
         transactions.add(new Transaction(paymentDate, paymentTime, paymentDescription, paymentVendor, convertedUserPaymentAmount));
@@ -229,7 +234,7 @@ public class Main {
                 ledgerCallInput = scanner.nextInt();
                 scanner.nextLine();
             } catch (InputMismatchException e) {
-                System.out.println("❌ Invalid input. Please enter a number from the menu.");
+                System.out.println("❌ Invalid input");
                 scanner.nextLine();
                 ledgerCallInput = -1;
             }
@@ -254,7 +259,7 @@ public class Main {
                     System.out.println("Returning to homeScreen...");
                     break;
                 default:
-                    System.out.println("Invalid Choice Please Try Again With A Different Choice");//make a nicer message
+                    System.out.println("Please Try Again With A Different Choice");//make a nicer message
             }
 
         } while (ledgerCallInput != 0);
@@ -279,7 +284,7 @@ public class Main {
                 accountSummaryInput = scanner.nextInt();
                 scanner.nextLine();
             } catch (InputMismatchException e) {
-                System.out.println("❌ Invalid input. Please enter a number from the menu.");
+                System.out.println("❌ Invalid input.");
                 scanner.nextLine();
                 accountSummaryInput = -1;
             }
@@ -289,10 +294,10 @@ public class Main {
                     displayCurrentBalance();
                     break;
                 case 2:
-                    displayVendorSpending();//implement
+                    displayVendorSpending();
                     break;
                 case 3:
-                    displaySpendingSummary();//implment
+                    displaySpendingSummary();
                     break;
                 case 0:
                     System.out.println("Returning to homeScreen...");
@@ -329,7 +334,6 @@ public class Main {
 
         for (Transaction transaction:transactions){
 
-            //check if tbe vendor is already in if in add to it
             if (vendorTotals.containsKey(transaction.getVendor())){
                 double currentTotal = vendorTotals.get(transaction.getVendor());
                 vendorTotals.put(transaction.getVendor(),currentTotal+ transaction.getAmount());
@@ -356,8 +360,14 @@ public class Main {
             System.out.println("4)Last year");
             System.out.println("0)Exit");
 
-            spendingSummaryInput = scanner.nextInt();
-            scanner.nextLine();//buffer
+            try {
+                spendingSummaryInput = scanner.nextInt();
+                scanner.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println("❌ Invalid input.");
+                scanner.nextLine();
+                spendingSummaryInput = -1;
+            }
 
             switch (spendingSummaryInput){
                 case 1:
@@ -367,7 +377,7 @@ public class Main {
                     lastMonthSummary();
                     break;
                 case 3:
-                    thisYearsSummary();
+                    yearToDateSummary();
                     break;
                 case 4:
                     lastYearSummary();
@@ -394,8 +404,6 @@ public class Main {
             if (transaction.getDate() .getYear() == lastYear.getYear()) {
 
                 if (transaction.getAmount() > 0) {
-                    //when setting keys make it lower case
-                    //key shouldn't be displayed
                     double currentIncome = lastYearToDateSummary.getOrDefault("income", 0.0);
                     lastYearToDateSummary.put("income", currentIncome + transaction.getAmount());
 
@@ -405,24 +413,16 @@ public class Main {
                 }
             }
 
-
-
         }
 
-        for (Map.Entry<String, Double> entry : lastYearToDateSummary.entrySet()) {
-            System.out.println(entry.getKey() + ": $" + String.format("%.2f", entry.getValue()));
-        }
-        //what if empty **something to think about**
-        //if other categories hashmap would be a good fit
         double income = lastYearToDateSummary.getOrDefault("income", 0.0);
         double expense = lastYearToDateSummary.getOrDefault("expense", 0.0);
 
         displayBarSummary(income,expense);
 
-
     }
 
-    private static void thisYearsSummary() {
+    private static void yearToDateSummary() {
 
         LocalDate timeNow = LocalDate.now();
         Map<String,Double> yearToDateSummary = new HashMap<>();
@@ -431,8 +431,7 @@ public class Main {
         if (transaction.getDate() .getYear() == timeNow. getYear()) {
 
             if (transaction.getAmount() > 0) {
-                //when setting keys make it lower case
-                //key shouldn't be displayed
+
                 double currentIncome = yearToDateSummary.getOrDefault("income", 0.0);
                 yearToDateSummary.put("income", currentIncome + transaction.getAmount());
 
@@ -445,32 +444,22 @@ public class Main {
         }
     }
 
-        for (Map.Entry<String, Double> entry : yearToDateSummary.entrySet()) {
-        System.out.println(entry.getKey() + ": $" + String.format("%.2f", entry.getValue()));
-    }
-    //what if empty **something to think about**
-    //if other categories hashmap would be a good fit
     double income = yearToDateSummary.getOrDefault("income", 0.0);
     double expense = yearToDateSummary.getOrDefault("expense", 0.0);
-    double profit = income - expense;
-        System.out.printf("Profit: $%.2f\n", profit);
+    displayBarSummary(income,expense);
+
 }
 
     private static void lastMonthSummary() {
         Map<String, Double> lastMonthSummary = new HashMap<>();
-        // if within previous month
         LocalDate timeNow = LocalDate.now();
         LocalDate previousMonth = timeNow.minusMonths(1);
-//time.now.getYear
-        //doesn't read as easily
-        //this doesn't read as easuk
+
         for (Transaction transaction : transactions) {
             if (transaction.getDate().getMonth() == previousMonth.getMonth() &&
                     transaction.getDate().getYear() == previousMonth.getYear()) {
 
                 if (transaction.getAmount() > 0) {
-                    //when setting keys make it lower case
-                    //key shouldn't be displayed
                     double currentIncome = lastMonthSummary.getOrDefault("income", 0.0);
                     lastMonthSummary.put("income", currentIncome + transaction.getAmount());
 
@@ -481,20 +470,13 @@ public class Main {
             }
         }
 
-        for (Map.Entry<String, Double> entry : lastMonthSummary.entrySet()) {
-            System.out.println(entry.getKey() + ": $" + String.format("%.2f", entry.getValue()));
-        }
-//what if empty **something to think about**
-        //if other categories hashmap would be a good fit
         double income = lastMonthSummary.getOrDefault("income", 0.0);
         double expense = lastMonthSummary.getOrDefault("expense", 0.0);
-        double profit = income - expense;
-        System.out.printf("Profit: $%.2f\n", profit);
+        displayBarSummary(income,expense);
     }
 
     private static void thisMonthSummary() {
         Map<String, Double> accountSummary = new HashMap<>();
-        //if within this month
         LocalDate timeNow = LocalDate.now();
         for (Transaction transaction:transactions){
 
@@ -515,14 +497,10 @@ public class Main {
 
 
         }
-        for (Map.Entry<String,Double>entries : accountSummary.entrySet()){
-            System.out.println(entries.getKey() + entries.getValue());
-        }
+
         double income = accountSummary.getOrDefault("Income",0.0);
         double expense = accountSummary.getOrDefault("Expense",0.0);
-        double profit = income - expense;
-        System.out.printf("Profit: $%.2f\n", profit);
-
+        displayBarSummary(income,expense);
     }
 
     private static void displayAll() {
@@ -538,7 +516,7 @@ public class Main {
     }
 
     private static void handleReportCall() {
-        int reportCallInput;
+        int reportCallInput = -1;
 
         do {
             System.out.println("\n=====================================");
@@ -554,8 +532,16 @@ public class Main {
             System.out.println("=====================================");
             System.out.print("Select an option: ");
 
-            reportCallInput = scanner.nextInt();
-            scanner.nextLine();
+
+            try {
+                reportCallInput = scanner.nextInt();
+                scanner.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println("❌ Invalid input.");
+                scanner.nextLine();
+                reportCallInput = -1;
+            }
+
 
             switch (reportCallInput) {
                 case 1:
@@ -599,16 +585,7 @@ public class Main {
         System.out.println("------------------------------------------------------------------------------------------");
     }
 
-//if its 0 handle this ,
-    //maybe empty payment to someone else
-    //handle edge cases
-    //consider valiadtion
-    //make sure it doesn't crash
 
-    //a bunch of try and catches
-    //research error handling
-    //and exception handling
-    //u can use throws and parent method handles
 
     private static void displayPayments() {
 
@@ -692,7 +669,6 @@ public class Main {
         }
     }
     private static void searchByVendor() {
-        //use a set for this more complicated
 
         displayVendorList();
         System.out.println("\n🔍 Enter a keyword or full name to filter by Vendor:");
@@ -736,10 +712,7 @@ public class Main {
 
 
     private static void customSearch() {
-        System.out.println("Enter start date: "); //specifiy format
-        //extra thing would be handling multiple types of date
-        //enter 3 differnt ways
-        //american way
+        System.out.println("Enter start date: ");
         String startDateInputPreProcessed = scanner.nextLine().trim();
         LocalDate startDate = null;
         if (!startDateInputPreProcessed.isBlank()) {
@@ -759,15 +732,7 @@ public class Main {
         System.out.println("Enter vendor: ");
         String vendorInput = scanner.nextLine().trim();
 
-        System.out.println("Enter the approximate amount of the transaction"); //exact amount bad
-        //no one gonna know exact amount
-        //make it a range
-        // reformat this to seperate method for handling date range
-        //look up helper method
-        //given transactions
-        //method that gets a bunch of transactions and it auto handles
-        //reusuable date range logic
-        //given range
+        System.out.println("Enter the approximate amount of the transaction");
         double amountInput = scanner.nextDouble();
         scanner.nextLine();
 
@@ -799,6 +764,7 @@ public class Main {
         }
 
     }
+
 
     private static void displayHomeScreenAsciiArt() {
         final String RESET = "\u001B[0m";
@@ -833,6 +799,8 @@ public class Main {
         System.out.printf("Income  : %s $%.2f%n", incomeBar, income);
         System.out.printf("Expense : %s $%.2f%n", expenseBar, expense);
         System.out.printf("Profit  : $%.2f%n", income - expense);
+        System.out.println("\n");
+
     }
 
 
